@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+/* ─── THEME VARIABLES ─────────────────────────────── */
+:root {
+  --bg: #fdfcf8;
+  --surface: #f5f2ea;
+  --text: #1a1714;
+  --muted: #6b6560;
+  --accent: #c8a96e;
+  --accent-soft: #e8d9b8;
+  --border: #e5e0d8;
+  --nav: rgba(253,252,248,0.94);
+}
+
+body.theme-ivory {
+  --bg: #fdfcf8;
+  --surface: #f5f2ea;
+  --text: #1a1714;
+  --muted: #6b6560;
+  --accent: #c8a96e;
+  --accent-soft: #e8d9b8;
+  --border: #e5e0d8;
+  --nav: rgba(253,252,248,0.94);
+}
+
+body.theme-pearl {
+  --bg: #f8f9fb;
+  --surface: #eef0f6;
+  --text: #1a1c24;
+  --muted: #60647a;
+  --accent: #7b9cc4;
+  --accent-soft: #cad8ea;
+  --border: #dde0ec;
+  --nav: rgba(248,249,251,0.94);
+}
+
+body.theme-blush {
+  --bg: #fdf8f6;
+  --surface: #f4ede9;
+  --text: #1e1614;
+  --muted: #70605a;
+  --accent: #c0715a;
+  --accent-soft: #e8c8be;
+  --border: #e8ddd8;
+  --nav: rgba(253,248,246,0.94);
+}
+
+body.theme-midnight {
+  --bg: #0e0e12;
+  --surface: #16161e;
+  --text: #f0ece4;
+  --muted: #9b9690;
+  --accent: #c8a96e;
+  --accent-soft: #2e2818;
+  --border: #252320;
+  --nav: rgba(14,14,18,0.96);
+}
+
+/* ─── BASE ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  margin: 0;
+}
+
+/* ─── TYPOGRAPHY ──────────────────────────────────── */
+.font-display {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* ─── UTILITY CLASSES ─────────────────────────────── */
+.bg-theme    { background-color: var(--bg); }
+.bg-surface  { background-color: var(--surface); }
+.text-theme  { color: var(--text); }
+.text-muted  { color: var(--muted); }
+.text-accent { color: var(--accent); }
+.border-theme { border-color: var(--border); }
+.accent-bg   { background-color: var(--accent); }
+.accent-soft-bg { background-color: var(--accent-soft); }
+
+/* ─── NAV ─────────────────────────────────────────── */
+.nav-blur {
+  background: var(--nav);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.4s;
+}
+
+/* ─── BUTTONS ─────────────────────────────────────── */
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  padding: 13px 36px;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.25s, transform 0.25s;
+  display: inline-block;
+}
+.btn-primary:hover { opacity: 0.82; transform: translateY(-2px); }
+
+.btn-ghost {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  padding: 13px 36px;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, transform 0.25s;
+  display: inline-block;
+}
+.btn-ghost:hover {
+  background: var(--accent);
+  color: var(--bg);
+  transform: translateY(-2px);
+}
+
+/* ─── CARDS ───────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.09);
+}
+
+/* ─── FORM ────────────────────────────────────────── */
+.field {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.25s;
+  resize: none;
+}
+.field:focus { border-color: var(--accent); }
+.field::placeholder { color: var(--muted); }
+
+/* ─── HERO ────────────────────────────────────────── */
+.hero-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 70% at 80% 50%, var(--accent-soft), transparent 70%);
+  opacity: 0.65;
+  pointer-events: none;
+  transition: background 0.4s;
+}
+
+/* ─── ACCENT LINE ─────────────────────────────────── */
+.line {
+  height: 2px;
+  background: var(--accent);
+  display: block;
+}
+
+/* ─── THEME DOTS ──────────────────────────────────── */
+.theme-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.theme-dot.active {
+  border-color: var(--accent);
+  transform: scale(1.25);
+}
+
+/* ─── GALLERY ─────────────────────────────────────── */
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(200,169,110,0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+
+/* ─── ANIMATIONS ──────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up   { animation: fadeUp 0.75s ease forwards; }
+.delay-100 { animation-delay: 0.1s; opacity: 0; }
+.delay-200 { animation-delay: 0.22s; opacity: 0; }
+.delay-300 { animation-delay: 0.38s; opacity: 0; }
+.delay-400 { animation-delay: 0.52s; opacity: 0; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+.float { animation: float 5s ease-in-out infinite; }
+
+/* ─── SCROLLBAR ───────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
