@@ -1,10 +1,59 @@
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+
+const HEADING_SEGMENTS = [
+  { text: 'The bridge\n', accent: false },
+  { text: 'you need',     accent: true  },
+]
+const HEADING_FULL = HEADING_SEGMENTS.map(s => s.text).join('')
+
+function TypewriterHeading() {
+  const [count, setCount] = useState(0)
+  const done = count >= HEADING_FULL.length
+
+  useEffect(() => {
+    if (done) return
+    const t = setTimeout(() => setCount(c => c + 1), 60)
+    return () => clearTimeout(t)
+  }, [count, done])
+
+  let remaining = count
+  const visible = HEADING_SEGMENTS.map(seg => {
+    const slice = seg.text.slice(0, Math.max(0, remaining))
+    remaining = Math.max(0, remaining - seg.text.length)
+    return { text: slice, accent: seg.accent }
+  })
+
+  return (
+    <h1 className="font-display text-6xl md:text-7xl font-light text-theme leading-tight max-w-2xl">
+      {visible.map((seg, i) =>
+        seg.text.split('\n').map((line, j, arr) => (
+          <span key={`${i}-${j}`}>
+            {seg.accent
+              ? <em className="text-accent not-italic">{line}</em>
+              : line}
+            {j < arr.length - 1 && <br />}
+          </span>
+        ))
+      )}
+      {!done && (
+        <span style={{
+          display: 'inline-block', width: 3, height: '0.8em',
+          marginLeft: 2, verticalAlign: 'middle',
+          backgroundColor: 'var(--accent)',
+          animation: 'tw-blink 1s ease-in-out infinite',
+        }} />
+      )}
+      <style>{`@keyframes tw-blink { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
+    </h1>
+  )
+}
 
 const VALUES = [
   { title: 'Transparency',  desc: 'No hidden fees, no surprise costs. We keep you informed at every step of the sourcing process.' },
   { title: 'Trust',         desc: 'Your money and interests are protected. We only recommend suppliers we have personally verified.' },
-  { title: 'Efficiency',    desc: 'We move quickly so you don\'t miss market windows. Fast turnaround on quotes, inspections, and shipments.' },
-  { title: 'Partnership',   desc: 'We treat your business like our own — the better you do, the better we do. Long-term relationships are our goal.' },
+  { title: 'Efficiency',    desc: "We move quickly so you don't miss market windows. Fast turnaround on quotes, inspections, and shipments." },
+  { title: 'Partnership',   desc: "We treat your business like our own — the better you do, the better we do. Long-term relationships are our goal." },
 ]
 
 export default function About() {
@@ -27,10 +76,7 @@ export default function About() {
             <span className="line w-10" />
             <p className="text-xs tracking-[0.22em] uppercase text-muted">Our Story</p>
           </div>
-          <h1 className="font-display text-6xl md:text-7xl font-light text-theme leading-tight max-w-2xl">
-            The bridge<br />
-            <em className="text-accent not-italic">you need</em>
-          </h1>
+          <TypewriterHeading />
         </div>
       </section>
 

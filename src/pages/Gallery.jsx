@@ -1,21 +1,13 @@
 import { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
-// ---------- 1. DYNAMIC GALLERY BUILDER (6 categories, 3×2) ----------
+// ---------- 1. DYNAMIC GALLERY BUILDER ----------
 function buildBaseGalleryItems() {
   const imagePaths = (folder, prefix, start, end, exclusions = []) => {
     const paths = [];
     for (let i = start; i <= end; i++) {
       if (exclusions.includes(i)) continue;
-      paths.push(`/images/${folder}/${prefix}${i}`); // no extension
-    }
-    return paths;
-  };
-
-  const videoPaths = (folder, prefix, start, end) => {
-    const paths = [];
-    for (let i = start; i <= end; i++) {
-      paths.push(`/images/${folder}/${prefix}${i}.mp4`);
+      paths.push(`/images/${folder}/${prefix}${i}`); // no extension — resolved at runtime
     }
     return paths;
   };
@@ -23,7 +15,11 @@ function buildBaseGalleryItems() {
   return [
     {
       label: 'Furniture Sourcing',
-      media: imagePaths('furniture', 'furniture', 0, 8),
+      media: [
+        '/images/furniture/furniture-vid0.mp4',
+        '/images/furniture/furniture-vid1.mp4',
+        ...imagePaths('furniture', 'furniture', 0, 8),
+      ],
     },
     {
       label: 'Machinery Inspection',
@@ -33,14 +29,16 @@ function buildBaseGalleryItems() {
       label: 'Auto Sourcing',
       media: [
         ...imagePaths('cars', 'cars', 0, 6),
+        '/images/cars/cars6.mp4',
         '/images/cars/cars7.mp4',
       ],
     },
     {
       label: 'Clothing Suppliers',
       media: [
-        ...videoPaths('clothes', 'clothes', 1, 4),
-        ...imagePaths('clothes', 'clothes', 5, 6),
+        '/images/clothes/clothes1.mp4',
+        '/images/clothes/clothes2.mp4',
+        ...imagePaths('clothes', 'clothes', 3, 4), // clothes3 & clothes4 are jpg/jpeg
       ],
     },
     {
@@ -51,7 +49,10 @@ function buildBaseGalleryItems() {
       label: 'Warehouse Logistics & Shipping',
       media: [
         ...imagePaths('warehouse', 'transport', 1, 3),
-        ...videoPaths('warehouse', 'transport', 4, 7),
+        '/images/warehouse/transport4.mp4',
+        '/images/warehouse/transport5.mp4',
+        '/images/warehouse/transport6.mp4',
+        '/images/warehouse/transport7.mp4',
       ],
     },
   ];
@@ -91,7 +92,7 @@ async function buildResolvedGallery() {
   return resolvedItems;
 }
 
-// ---------- 3. REACT COMPONENT (3×2 grid & category titles) ----------
+// ---------- 3. REACT COMPONENT ----------
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState([]);
   const [lightbox, setLightbox] = useState(null);
@@ -141,7 +142,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Grid — 3 columns on desktop, 2 on mobile (3×2 = 6 items) */}
+      {/* Grid — 3 columns on desktop, 2 on mobile */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4" style={{ gridAutoRows: '1fr' }}>
           {galleryItems.map((item, idx) => {
@@ -158,7 +159,6 @@ export default function Gallery() {
                   border: '1px solid var(--border)',
                 }}
               >
-                {/* Thumbnail: image or video */}
                 {isFirstVideo ? (
                   <div className="absolute inset-0 w-full h-full bg-black">
                     <video
@@ -179,7 +179,6 @@ export default function Gallery() {
                   />
                 )}
 
-                {/* Hover overlay - shows category title BEFORE opening */}
                 <div className="gallery-overlay">
                   <div className="text-center px-4">
                     <span
@@ -206,7 +205,7 @@ export default function Gallery() {
         </p>
       </section>
 
-      {/* Categories tags (unchanged) */}
+      {/* Category tags */}
       <section
         className="py-16"
         style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)' }}
@@ -215,16 +214,8 @@ export default function Gallery() {
           <p className="text-xs tracking-[0.22em] uppercase text-muted mb-10">Product Ranges</p>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              'Furniture',
-              'Building Materials',
-              'Cars',
-              'Medical Supplies',
-              'Cosmetics',
-              'Machinery',
-              'Equipment',
-              'Clothing',
-              'Apparel',
-              'Electronics',
+              'Furniture', 'Building Materials', 'Cars', 'Medical Supplies',
+              'Cosmetics', 'Machinery', 'Equipment', 'Clothing', 'Apparel', 'Electronics',
             ].map((tag) => (
               <span
                 key={tag}
@@ -238,7 +229,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Lightbox - shows category title AFTER opening (bottom bar) */}
+      {/* Lightbox */}
       {lightbox && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
@@ -273,7 +264,6 @@ export default function Gallery() {
               )}
             </div>
 
-            {/* Bottom bar: category title displayed here AFTER opening */}
             <div className="flex items-center justify-between mt-4 px-1">
               <p className="font-display text-white text-lg font-light">
                 {lightbox.item.label}
@@ -293,7 +283,6 @@ export default function Gallery() {
               )}
             </div>
 
-            {/* Dot indicators */}
             {lightbox.item.images.length > 1 && (
               <div className="flex justify-center gap-2 mt-3">
                 {lightbox.item.images.map((_, i) => (
@@ -302,10 +291,7 @@ export default function Gallery() {
                     onClick={() => setLightbox((lb) => ({ ...lb, mediaIndex: i }))}
                     className="w-1.5 h-1.5 rounded-full transition-all"
                     style={{
-                      background:
-                        i === lightbox.mediaIndex
-                          ? 'var(--accent)'
-                          : 'rgba(255,255,255,0.3)',
+                      background: i === lightbox.mediaIndex ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
                       transform: i === lightbox.mediaIndex ? 'scale(1.4)' : 'scale(1)',
                     }}
                   />
