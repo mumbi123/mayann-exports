@@ -69,7 +69,7 @@ export default function About() {
           className="font-display absolute -right-8 -bottom-10 text-[220px] font-light leading-none select-none pointer-events-none"
           style={{ color: 'var(--accent-soft)', opacity: 0.5 }}
         >
-          桥
+          
         </span>
         <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center gap-5 mb-6">

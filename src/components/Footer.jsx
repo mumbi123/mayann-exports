@@ -35,9 +35,9 @@ export default function Footer() {
               <Mail size={15} className="text-accent flex-shrink-0" />
               mayannexports@gmail.com
             </a>
-            <a href="https://wa.me/8615330331830" className="flex items-center gap-3 text-sm text-muted hover:text-accent transition-colors no-underline">
+            <a href="https://wa.me/8613298329703" className="flex items-center gap-3 text-sm text-muted hover:text-accent transition-colors no-underline">
               <MessageCircle size={15} className="text-accent flex-shrink-0" />
-              WhatsApp: +86 153 3033 1830
+              WhatsApp: +86 132 9832 9703
             </a>
             <a href="tel:+8613298329703" className="flex items-center gap-3 text-sm text-muted hover:text-accent transition-colors no-underline">
               <Phone size={15} className="text-accent flex-shrink-0" />

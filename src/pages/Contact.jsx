@@ -12,8 +12,8 @@ const CONTACT_METHODS = [
   {
     icon: MessageCircle,
     label: 'WhatsApp',
-    value: '+86 153 3033 1830',
-    href: 'https://wa.me/8615330331830',
+    value: '+86 132 9832 9703',
+    href: 'https://wa.me/8613298329703',
     note: 'Fast responses, 24/7',
   },
   {
