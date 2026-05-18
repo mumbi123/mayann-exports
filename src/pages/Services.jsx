@@ -96,7 +96,7 @@ const PRODUCTS = [
   { img: '/furniture.jpg', t: 'Furniture &\nBuilding Materials' },
   { img: '/cars.jpg',      t: 'Cars &\nVehicles' },
   { img: '/medical.jpg',   t: 'Medical Supplies\n& Cosmetics' },
-  { img: '/gear.jpg',      t: 'Equipment &\nMachinery' },
+  { img: '/public/images/machines/machine0.jpeg',      t: 'Equipment &\nMachinery' },
   { img: '/clothes.jpg',   t: 'Clothing &\nApparel' },
 ]
 
