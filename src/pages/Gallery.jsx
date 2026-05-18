@@ -20,9 +20,12 @@ function buildBaseGalleryItems() {
     },
     {
       label: 'Machinery Inspection',
-      media: [
-        ...imagePaths('machines', 'machine', 0, 3), // machine0–machine3 jpg/jpeg
-      ],
+       media: [
+    '/images/machines/printer.jpeg',
+    '/images/machines/sewing.jpeg',
+    '/images/machines/workshop.jpeg',
+    '/images/machines/road.jpg',
+  ],
     },
     {
       label: 'Auto Sourcing',
